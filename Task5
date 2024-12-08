@@ -1,0 +1,19 @@
+pip install scapy
+from scapy.all import *
+# Function to process and display the captured packet
+def packet_callback(packet):
+    if packet.haslayer(IP):  # Only process IP packets
+        ip_src = packet[IP].src  # Source IP address
+        ip_dst = packet[IP].dst  # Destination IP address
+        protocol = packet[IP].proto  # Protocol (TCP/UDP/ICMP)
+        payload = packet.payload  # Payload data (if available)
+        print(f"Source IP: {ip_src} --> Destination IP: {ip_dst}")
+        print(f"Protocol: {protocol}")
+        print(f"Payload: {payload}\n")
+# Sniff packets on the network
+def start_sniffing():
+    print("Starting packet sniffing...")
+    sniff(prn=packet_callback, store=0)
+if __name__ == "__main__":
+    start_sniffing()
+ 
